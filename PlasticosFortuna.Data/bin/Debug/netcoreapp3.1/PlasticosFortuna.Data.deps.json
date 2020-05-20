@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "PlasticosFortuna.Data/1.0.0": {
+        "dependencies": {
+          "PlasticosFortuna.Shared": "1.0.0"
+        },
+        "runtime": {
+          "PlasticosFortuna.Data.dll": {}
+        }
+      },
+      "PlasticosFortuna.Shared/1.0.0": {
+        "runtime": {
+          "PlasticosFortuna.Shared.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PlasticosFortuna.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PlasticosFortuna.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

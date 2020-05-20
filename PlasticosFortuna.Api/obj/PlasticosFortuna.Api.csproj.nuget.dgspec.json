@@ -1,0 +1,230 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Api\\PlasticosFortuna.Api.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Api\\PlasticosFortuna.Api.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Api\\PlasticosFortuna.Api.csproj",
+        "projectName": "PlasticosFortuna.Api",
+        "projectPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Api\\PlasticosFortuna.Api.csproj",
+        "packagesPath": "C:\\Users\\beltr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Api\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\beltr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\beltr\\source\\repos\\NuGet": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Data\\PlasticosFortuna.Data.csproj": {
+                "projectPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Data\\PlasticosFortuna.Data.csproj"
+              },
+              "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared.csproj": {
+                "projectPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.Formatters.Json": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Data\\PlasticosFortuna.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Data\\PlasticosFortuna.Data.csproj",
+        "projectName": "PlasticosFortuna.Data",
+        "projectPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Data\\PlasticosFortuna.Data.csproj",
+        "packagesPath": "C:\\Users\\beltr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\beltr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\beltr\\source\\repos\\NuGet": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared.csproj": {
+                "projectPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared.csproj",
+        "projectName": "PlasticosFortuna.Shared",
+        "projectPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared.csproj",
+        "packagesPath": "C:\\Users\\beltr\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.Shared\\PlasticosFortuna.Shared\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\beltr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\beltr\\source\\repos\\NuGet": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

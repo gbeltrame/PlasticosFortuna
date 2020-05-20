@@ -1,0 +1,11 @@
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\bin\Debug\netcoreapp3.1\PlasticosFortuna.Data.deps.json
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\bin\Debug\netcoreapp3.1\PlasticosFortuna.Data.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\bin\Debug\netcoreapp3.1\PlasticosFortuna.Data.pdb
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\netcoreapp3.1\PlasticosFortuna.Data.csprojAssemblyReference.cache
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\netcoreapp3.1\PlasticosFortuna.Data.AssemblyInfoInputs.cache
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\netcoreapp3.1\PlasticosFortuna.Data.AssemblyInfo.cs
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\netcoreapp3.1\PlasticosFortuna.Data.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\netcoreapp3.1\PlasticosFortuna.Data.pdb
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\bin\Debug\netcoreapp3.1\PlasticosFortuna.Shared.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\bin\Debug\netcoreapp3.1\PlasticosFortuna.Shared.pdb
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\netcoreapp3.1\PlasticosFortuna.Data.csproj.CopyComplete

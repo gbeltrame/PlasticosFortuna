@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "FP2/H4DmHqcHqM8IkeaR7E9M/HykO+RYno3WhWeDqaUm93Zyxk19b7zjouwoaIfPID0QlZp70/25sdpQ18FRFQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.UI\\PlasticosFortuna.UI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\beltr\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
