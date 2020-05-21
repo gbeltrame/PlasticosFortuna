@@ -9,3 +9,4 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\net
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\bin\Debug\netcoreapp3.1\PlasticosFortuna.Shared.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\bin\Debug\netcoreapp3.1\PlasticosFortuna.Shared.pdb
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\netcoreapp3.1\PlasticosFortuna.Data.csproj.CopyComplete
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Data\obj\Debug\netcoreapp3.1\PlasticosFortuna.Data.csproj.CoreCompileInputs.cache

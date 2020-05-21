@@ -6,7 +6,7 @@ namespace PlasticosFortuna.Shared
     public class OrdenDeTrabajo
     {
         // Identificador unico de orden de trabajo (autoincremental)
-        public int OrdenId { get; set; }
+        public int Id { get; set; }
         // Nombre de la orden
         public string Nombre { get; set; }
         // Descripcion o notas de la orden

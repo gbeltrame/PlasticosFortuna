@@ -13,6 +13,12 @@ namespace PlasticosFortuna.Data
 
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<ItemOrdenTrabajo> ItemsOrdenTrabajo { get; set; }
+        public DbSet<Operacion> Operaciones { get; set; }
+        public DbSet<OrdenDeTrabajo> OrdenesDeTrabajo { get; set; }
+        public DbSet<Plastico> Plasticos { get; set; }
+        public DbSet<Proveedor> Proveedores { get; set; }
+
+
 
     }
 }

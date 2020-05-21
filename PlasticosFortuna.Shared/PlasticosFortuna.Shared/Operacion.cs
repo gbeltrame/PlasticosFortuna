@@ -4,7 +4,7 @@ namespace PlasticosFortuna.Shared
 {
     public class Operacion
     {
-        public int IdOperacion { get; set; }
+        public int Id { get; set; }
         // Tipo de operacion para el plastico
         public TipoOperacion TipoOperacion { get; set; }
         // Cantidad comprada o consumida

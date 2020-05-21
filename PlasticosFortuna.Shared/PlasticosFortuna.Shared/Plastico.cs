@@ -4,14 +4,14 @@ using System.Text;
 
 namespace PlasticosFortuna.Shared
 {
-    class Plastico
+    public class Plastico
     {
-        public int IdPlastico { get; set; }
+        public int Id { get; set; }
         // Tipo de plastico
-        public TipoPlastico tipo { get; set; }
+        public TipoPlastico Tipo { get; set; }
         // Cantidad total del tipo de plastico en Kg
         public int CantidadTotal { get; set; }
         // Detalles de operaciones de compra y uso de plastico
-        public ICollection<Operacion> DetallesPlastico { get; set; }
+        public ICollection<Operacion> Operaciones { get; set; }
     }
 }

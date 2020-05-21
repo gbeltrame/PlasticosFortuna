@@ -1533,6 +1533,9 @@
       },
       "PlasticosFortuna.Data/1.0.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore": "3.1.4",
+          "Microsoft.EntityFrameworkCore.Relational": "3.1.4",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.4",
           "PlasticosFortuna.Shared": "1.0.0"
         },
         "runtime": {
@@ -1543,6 +1546,9 @@
         }
       },
       "PlasticosFortuna.Shared/1.0.0": {
+        "dependencies": {
+          "System.ComponentModel.Annotations": "4.7.0"
+        },
         "runtime": {
           "PlasticosFortuna.Shared.dll": {}
         },
