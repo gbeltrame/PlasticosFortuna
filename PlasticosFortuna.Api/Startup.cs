@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using PlasticosFortuna.Data;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using PlasticosFortuna.Data.Repositories;
 
 namespace PlasticosFortuna.Api
 {
@@ -31,6 +32,7 @@ namespace PlasticosFortuna.Api
         {
             services.AddDbContext<AppDbContext>(options =>
                  options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddCors(options =>
             {
                 options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());

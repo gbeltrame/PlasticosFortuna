@@ -18,7 +18,14 @@ namespace PlasticosFortuna.Data
         public DbSet<Plastico> Plasticos { get; set; }
         public DbSet<Proveedor> Proveedores { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            //seed categories
+            modelBuilder.Entity<Cliente>().HasData(new Cliente { Id = 1, Nombre = "Maxiconsumo S.A", Descripcion = "Test abc abc abc abc" });
+            modelBuilder.Entity<Cliente>().HasData(new Cliente { Id = 2, Nombre = "RobSanchez S.A", Descripcion = "Test 123 123 123 123" });
+        }
 
     }
 }

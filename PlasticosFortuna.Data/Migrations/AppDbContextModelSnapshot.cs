@@ -35,6 +35,20 @@ namespace PlasticosFortuna.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clientes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Test abc abc abc abc",
+                            Nombre = "Maxiconsumo S.A"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Test 123 123 123 123",
+                            Nombre = "RobSanchez S.A"
+                        });
                 });
 
             modelBuilder.Entity("PlasticosFortuna.Shared.ItemOrdenTrabajo", b =>

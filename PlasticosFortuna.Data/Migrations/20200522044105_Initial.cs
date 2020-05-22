@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PlasticosFortuna.Data.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -127,6 +127,16 @@ namespace PlasticosFortuna.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Clientes",
+                columns: new[] { "Id", "Descripcion", "Nombre" },
+                values: new object[] { 1, "Test abc abc abc abc", "Maxiconsumo S.A" });
+
+            migrationBuilder.InsertData(
+                table: "Clientes",
+                columns: new[] { "Id", "Descripcion", "Nombre" },
+                values: new object[] { 2, "Test 123 123 123 123", "RobSanchez S.A" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ItemsOrdenTrabajo_OrdenDeTrabajoId",

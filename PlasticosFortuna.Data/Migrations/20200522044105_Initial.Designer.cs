@@ -10,8 +10,8 @@ using PlasticosFortuna.Data;
 namespace PlasticosFortuna.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200521015549_Inicial2")]
-    partial class Inicial2
+    [Migration("20200522044105_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,20 @@ namespace PlasticosFortuna.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clientes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Test abc abc abc abc",
+                            Nombre = "Maxiconsumo S.A"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Test 123 123 123 123",
+                            Nombre = "RobSanchez S.A"
+                        });
                 });
 
             modelBuilder.Entity("PlasticosFortuna.Shared.ItemOrdenTrabajo", b =>
