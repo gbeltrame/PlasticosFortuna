@@ -1,28 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlasticosFortuna.Shared
 {
     public class OrdenDeTrabajo
     {
-        // Identificador unico de orden de trabajo (autoincremental)
+        [Key]
+        [Display(Name = "Numero de Orden")]
         public int Id { get; set; }
-        // Nombre de la orden
+
+        [Display(Name = "Nombre de la Orden")]
+        [MaxLength(70, ErrorMessage = "La cantidad maxima de caracteres es 70")]
         public string Nombre { get; set; }
-        // Descripcion o notas de la orden
+
+        [MaxLength(250, ErrorMessage = "La cantidad maxima de caracteres es 250")]
         public string Descripcion { get; set; }
-        // Lista de items de la orden de trabajo
+        
+        [Required]
         public ICollection<ItemOrdenTrabajo> Items { get; set; }
+
         // Determina si se vendera la bobina como producto final
+        [Display(Name = "Bobina Producto Final")]
+        [Required]
         public bool BobinaProducto { get; set; }
-        // Determina si la orden necsita tener impresion
+
+        [Display(Name = "Necesita Impresion")]
+        [Required]
         public bool NecesitaImpresion { get; set; }
+        
         public Cliente Cliente { get; set; }
-        // Estado de la orden (enum)
+
+        [Required(ErrorMessage = "El campo 'Estado' es requerido")]
         public EstadoOrden Estado { get; set; }
-        // Fecha de creacion de la orden
+
+        [Display(Name = "Tipo de creacion")]
         public DateTime FechaCreacion { get; set; }
-        // Fecha de ultima modificacion de la orden
+
+        [Display(Name = "Fecha de modificacion")]
         public DateTime FechaModificacion { get; set; }
+
+
     }
 }

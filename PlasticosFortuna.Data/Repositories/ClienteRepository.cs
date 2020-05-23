@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using PlasticosFortuna.Data.Helpers;
 using PagedList.Core;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -30,30 +29,39 @@ namespace PlasticosFortuna.Data.Repositories
             return _appDbContext.Clientes.FirstOrDefault(c => c.Id == clienteId);   
         }
 
-        public async Task<Cliente> UpdateCliente(Cliente cliente)
+        public Cliente UpdateCliente(Cliente cliente)
         {
-            var foundCliente = await _appDbContext.Clientes.Include(o => o.OrdenesDeTrabajo).FirstOrDefaultAsync(c => c.Id == cliente.Id);
+            var foundCliente =  _appDbContext.Clientes.FirstOrDefault(c => c.Id == cliente.Id);
 
             if (foundCliente != null)
             {
                 foundCliente.Nombre = cliente.Nombre;
                 foundCliente.Descripcion = cliente.Descripcion;
+                foundCliente.Email = cliente.Email;
 
-                await _appDbContext.SaveChangesAsync();
+                _appDbContext.SaveChanges();
+                return foundCliente;
             }
             return null;
         }
 
-        public async void DeleteCliente(int clienteId)
+        public void DeleteCliente(int clienteId)
         {
             var foundCliente = _appDbContext.Clientes.FirstOrDefault(c => c.Id == clienteId);
             if (foundCliente != null)
             {
                 _appDbContext.Clientes.Remove(foundCliente);
-                await _appDbContext.SaveChangesAsync();
+                _appDbContext.SaveChanges();
 
             }
 
+        }
+
+        public Cliente AddCliente(Cliente cliente)
+        {
+            var addedEntity = _appDbContext.Clientes.Add(cliente);
+            _appDbContext.SaveChanges();
+            return addedEntity.Entity;
         }
     }
 }
