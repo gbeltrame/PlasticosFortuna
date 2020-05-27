@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using PagedList.Core;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using PlasticosFortuna.Data.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace PlasticosFortuna.Data.Repositories
 {
@@ -20,8 +21,7 @@ namespace PlasticosFortuna.Data.Repositories
 
         public PagedList<Cliente> GetClientes(PaginationDTO pagination)
         {
-            PagedList<Cliente> model = new PagedList<Cliente>(_appDbContext.Clientes, pagination.Page, pagination.PageSize);
-            return model;
+            return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes, pagination.PageNumber, pagination.PageSize);
         }
 
         public Cliente GetClienteById(int clienteId)

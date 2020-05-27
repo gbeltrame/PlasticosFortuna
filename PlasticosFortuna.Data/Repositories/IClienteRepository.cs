@@ -1,5 +1,4 @@
-﻿using PagedList.Core;
-using PlasticosFortuna.Shared;
+﻿using PlasticosFortuna.Shared;
 using System.Threading.Tasks;
 
 namespace PlasticosFortuna.Data.Repositories

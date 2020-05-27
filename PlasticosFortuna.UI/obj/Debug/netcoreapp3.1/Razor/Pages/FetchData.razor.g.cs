@@ -73,6 +73,13 @@ using PlasticosFortuna.UI.Shared;
 #line hidden
 #nullable disable
 #nullable restore
+#line 10 "C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\_Imports.razor"
+using BlazorStrap;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\Pages\FetchData.razor"
 using PlasticosFortuna.UI.Data;
 

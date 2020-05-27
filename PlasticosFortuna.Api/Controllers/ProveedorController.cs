@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PlasticosFortuna.Data.Repositories;
 using PlasticosFortuna.Shared;
+using Newtonsoft.Json;
 
 namespace PlasticosFortuna.Api.Controllers
 {
@@ -20,12 +21,22 @@ namespace PlasticosFortuna.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllProveedores([FromQuery]int page, [FromQuery]int pageSize)
+        public IActionResult GetAllProveedores([FromQuery] PaginationDTO paging)
         {
             try
             {
-                PaginationDTO paging = new PaginationDTO { Page = page, PageSize = pageSize };
-                return Ok(_ProveedorRepository.GetProveedores(paging));
+                var proveedores = _ProveedorRepository.GetProveedores(paging);
+                var metadata = new
+                {
+                    proveedores.TotalCount,
+                    proveedores.PageSize,
+                    proveedores.CurrentPage,
+                    proveedores.TotalPages,
+                    proveedores.HasNext,
+                    proveedores.HasPrevious
+                };
+                Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+                return Ok(proveedores);
             }
             catch (Exception)
             {

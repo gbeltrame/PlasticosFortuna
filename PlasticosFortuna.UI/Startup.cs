@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using BlazorStrap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +31,8 @@ namespace PlasticosFortuna.UI
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<HttpClient>();
+            services.AddBootstrapCss();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

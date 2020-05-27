@@ -61,8 +61,6 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\obj\Debug\netc
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\obj\Debug\netcoreapp3.1\PlasticosFortuna.Api.genruntimeconfig.cache
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\PlasticosFortuna.Data.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\PlasticosFortuna.Data.pdb
-C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\PagedList.Core.dll
-C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\PagedList.Core.Mvc.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
@@ -136,5 +134,4 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netc
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\obj\Debug\netcoreapp3.1\PlasticosFortuna.Api.csproj.CoreCompileInputs.cache
-C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\obj\Debug\netcoreapp3.1\PlasticosFortuna.Api.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\obj\Debug\netcoreapp3.1\PlasticosFortuna.Api.MvcApplicationPartsAssemblyInfo.cache

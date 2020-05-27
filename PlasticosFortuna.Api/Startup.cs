@@ -30,19 +30,22 @@ namespace PlasticosFortuna.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IClienteRepository, ClienteRepository>();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
-            });
             services.AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
+            services.AddDbContext<AppDbContext>(options =>
+                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b=>b.MigrationsAssembly("PlasticosFortuna.Data")));
+
+            services.AddTransient<IClienteRepository, ClienteRepository>();
+            services.AddTransient<IProveedorRepository, ProveedorRepository>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

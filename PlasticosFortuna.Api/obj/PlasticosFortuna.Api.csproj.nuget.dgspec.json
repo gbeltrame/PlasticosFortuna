@@ -152,6 +152,12 @@
               "target": "Package",
               "version": "[3.1.4, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
               "version": "[3.1.4, )"
@@ -159,10 +165,6 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.4, )"
-            },
-            "PagedList.Core.Mvc": {
-              "target": "Package",
-              "version": "[3.0.0, )"
             }
           },
           "imports": [
@@ -176,9 +178,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

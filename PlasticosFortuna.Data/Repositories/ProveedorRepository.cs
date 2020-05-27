@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PagedList.Core;
 using PlasticosFortuna.Shared;
 using System;
 using System.Collections.Generic;
@@ -20,8 +19,7 @@ namespace PlasticosFortuna.Data.Repositories
 
         public PagedList<Proveedor> GetProveedores(PaginationDTO pagination)
         {
-            PagedList<Proveedor> model = new PagedList<Proveedor>(_appDbContext.Proveedores, pagination.Page, pagination.PageSize);
-            return model;
+            return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores, pagination.PageNumber, pagination.PageSize);
         }
 
         public Proveedor GetProveedorById(int ProveedorId)

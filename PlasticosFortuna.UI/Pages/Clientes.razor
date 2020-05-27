@@ -1,0 +1,120 @@
+﻿@page "/clientes"
+
+@using PlasticosFortuna.Shared;
+@using BlazorStrap.Util;
+@using BlazorStrap.Extensions;
+@inject HttpClient Http;
+
+
+<h3>Clientes</h3>
+
+@if (clientes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <BSButton Color="Color.Primary" @onclick="@(() => NuevoClienteModal.Show())">Launch demo modal</BSButton>
+    <p />
+    <BSModal @ref="NuevoClienteModal">
+        <EditForm Model="@newCliente" OnValidSubmit="@InsertCliente">
+            <BSModalHeader OnClick="@(() => NuevoClienteModal.Hide())">Nuevo Cliente</BSModalHeader>
+            <BSModalBody>
+                <p>
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <BSFormGroup>
+                        <BSLabel For="nombre">Nombre</BSLabel>
+                        <BSInput Id="nombre" @bind-Value="@newCliente.Nombre" />
+                    </BSFormGroup>
+                    <BSFormGroup>
+                        <BSLabel For="descripcion">Descripci&#243;n</BSLabel>
+                        <BSBasicInput Id="descripcion" InputType="InputType.TextArea" @bind-Value="@newCliente.Descripcion" />
+                    </BSFormGroup>
+                    <BSFormGroup>
+                        <BSLabel For="email">Direcci&#243;n de correo electronico</BSLabel>
+                        <BSInput Id="email" InputType="InputType.Email" @bind-Value="@newCliente.Email" />
+                    </BSFormGroup>
+                </p>
+            </BSModalBody>
+            <BSModalFooter>
+                <BSButton Color="Color.Secondary" @onclick="@(() => NuevoClienteModal.Hide())">Cerrar</BSButton>
+                <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary" @onclick="@(() => NuevoClienteModal.Hide())">Crear</BSButton>
+            </BSModalFooter>
+        </EditForm>
+    </BSModal>
+
+    <BSLabel For="itemsPerPage">Resultados por p&#225;gina</BSLabel>
+    <BSBasicInput InputType="InputType.Text" Id="itemsPerPage" @bind-Value="@ItemsPerPage" />
+
+    <BSTable IsResponsive="true" IsStriped="true">
+        <BSTableHead>
+            <BSTableRow>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Nro. Cliente</a></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Nombre</a></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Descripcion</a></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Email</a></BSTableHeadCell>
+            </BSTableRow>
+        </BSTableHead>
+        <BSTableBody>
+            @foreach (var cliente in clientes)
+            {
+                <BSTableRow>
+                    <BSTableCell>@cliente.Id</BSTableCell>
+                    <BSTableCell>@cliente.Nombre</BSTableCell>
+                    <BSTableCell>@cliente.Descripcion</BSTableCell>
+                    <BSTableCell>@cliente.Email</BSTableCell>
+                </BSTableRow>
+            }
+        </BSTableBody>
+    </BSTable>
+    <BSPagination Alignment="Alignment.Center">
+        <BSPaginationItem IsDisabled="true">
+            <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.PreviousText" />
+        </BSPaginationItem>
+        @for (int i = 1; i < clientes.TotalPages; i++)
+        {
+            <BSPaginationItem>
+                <BSPaginationLink Href="" @onclick="@(() => GetAllClientesPaged(i))"  PaginationLinkType="PaginationLinkType.Custom">i</BSPaginationLink>
+            </BSPaginationItem>
+        }
+        <BSPaginationItem>
+            <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.NextText" />
+        </BSPaginationItem>
+    </BSPagination>
+}
+@code {
+    BSModal NuevoClienteModal;
+    private PagedList<Cliente> clientes;
+    private Cliente newCliente = new Cliente();
+    private int PageSelected = 1;
+    private string ItemsPerPage = "4";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllClientesPaged(1);
+    }
+
+    private async Task GetAllClientesPaged(int page)
+    {
+        PageSelected = page;
+        clientes = await Http.GetJsonAsync<PagedList<Cliente>>("https://localhost:44356/api/clientes?page=" + page.ToString() + "&pageSize=" + ItemsPerPage);
+    }
+
+    private void Sort()
+    {
+        clientes.ToList().Sort();
+    }
+
+    private async Task InsertCliente()
+    {
+        await Http.PostJsonAsync("https://localhost:44356/api/clientes", newCliente);
+
+        clientes.ToList().Add(newCliente);
+
+        newCliente = new Cliente();
+
+        await GetAllClientesPaged(PageSelected);
+    }
+
+}

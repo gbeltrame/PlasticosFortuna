@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlasticosFortuna.Api", "PlasticosFortuna.Api\PlasticosFortuna.Api.csproj", "{1E1EF5D7-631A-46E7-B771-3FD9A4D8811B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlasticosFortuna.Api", "PlasticosFortuna.Api\PlasticosFortuna.Api.csproj", "{1E1EF5D7-631A-46E7-B771-3FD9A4D8811B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlasticosFortuna.Shared", "PlasticosFortuna.Shared\PlasticosFortuna.Shared\PlasticosFortuna.Shared.csproj", "{9CA60BB4-7C0E-47D3-8C7A-8ACE0908B880}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlasticosFortuna.Shared", "PlasticosFortuna.Shared\PlasticosFortuna.Shared\PlasticosFortuna.Shared.csproj", "{9CA60BB4-7C0E-47D3-8C7A-8ACE0908B880}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlasticosFortuna.Data", "PlasticosFortuna.Data\PlasticosFortuna.Data.csproj", "{E4F7BD2C-1909-4E76-A7EF-D9C9EAD7400A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlasticosFortuna.Data", "PlasticosFortuna.Data\PlasticosFortuna.Data.csproj", "{E4F7BD2C-1909-4E76-A7EF-D9C9EAD7400A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlasticosFortuna.UI", "PlasticosFortuna.UI\PlasticosFortuna.UI.csproj", "{17984814-4507-4DD0-A07E-8B1AE456330C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlasticosFortuna.UI", "PlasticosFortuna.UI\PlasticosFortuna.UI.csproj", "{17984814-4507-4DD0-A07E-8B1AE456330C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
