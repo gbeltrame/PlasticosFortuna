@@ -3,6 +3,8 @@
 @using PlasticosFortuna.Shared;
 @using BlazorStrap.Util;
 @using BlazorStrap.Extensions;
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
 @inject HttpClient Http;
 
 
@@ -68,27 +70,29 @@ else
             }
         </BSTableBody>
     </BSTable>
+    <p>Mostrando {pagingMetadata.PageSize} de {pagingMetadata.TotalCount }</p>
     <BSPagination Alignment="Alignment.Center">
-        <BSPaginationItem IsDisabled="true">
+        <BSPaginationItem IsDisabled="(pagingMetadata.HasPrevious)">
             <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.PreviousText" />
         </BSPaginationItem>
-        @for (int i = 1; i < clientes.TotalPages; i++)
+        @for (int i = 1; i < pagingMetadata.TotalPages; i++)
         {
             <BSPaginationItem>
-                <BSPaginationLink Href="" @onclick="@(() => GetAllClientesPaged(i))"  PaginationLinkType="PaginationLinkType.Custom">i</BSPaginationLink>
+                <BSPaginationLink Href="" @onclick="@(() => GetAllClientesPaged(i))" PaginationLinkType="PaginationLinkType.Custom">@i</BSPaginationLink>
             </BSPaginationItem>
         }
-        <BSPaginationItem>
+        <BSPaginationItem  IsDisabled="(pagingMetadata.HasNext)">
             <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.NextText" />
         </BSPaginationItem>
     </BSPagination>
 }
 @code {
     BSModal NuevoClienteModal;
-    private PagedList<Cliente> clientes;
+    private List<Cliente> clientes = new List<Cliente>();
     private Cliente newCliente = new Cliente();
-    private int PageSelected = 1;
-    private string ItemsPerPage = "4";
+    private PaginationDTO Page = new PaginationDTO();
+    private PagingMetadata pagingMetadata = new PagingMetadata();
+    private string ItemsPerPage = "2";
 
     protected override async Task OnInitializedAsync()
     {
@@ -97,8 +101,14 @@ else
 
     private async Task GetAllClientesPaged(int page)
     {
-        PageSelected = page;
-        clientes = await Http.GetJsonAsync<PagedList<Cliente>>("https://localhost:44356/api/clientes?page=" + page.ToString() + "&pageSize=" + ItemsPerPage);
+        pagingMetadata.CurrentPage = page;
+        var response = await Http.GetAsync("https://localhost:44356/api/clientes?pageNumber=" + page.ToString() + "&pageSize=" + ItemsPerPage);
+        response.EnsureSuccessStatusCode();
+        clientes = JsonSerializer.Deserialize<List<Cliente>>( await response.Content.ReadAsStringAsync());
+        var entries = response.Headers.FirstOrDefault(q => q.Key == "X-Pagination").Value.FirstOrDefault();
+        pagingMetadata =  JsonSerializer.Deserialize<PagingMetadata>(entries.ToString());
+
+
     }
 
     private void Sort()
@@ -114,7 +124,7 @@ else
 
         newCliente = new Cliente();
 
-        await GetAllClientesPaged(PageSelected);
+        await GetAllClientesPaged(Page.PageNumber);
     }
 
 }
