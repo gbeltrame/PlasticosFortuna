@@ -5,12 +5,17 @@
 @using BlazorStrap.Extensions;
 @using System.Text.Json;
 @using System.Text.Json.Serialization;
-@inject HttpClient Http;
+@using System.Text;
+@inject IHttpClientFactory _clientFactory;
 
 
 <h3>Clientes</h3>
 
-@if (clientes == null)
+@if (string.IsNullOrWhiteSpace(errorString) == false)
+{
+    <div class="h2">@errorString</div>
+}
+else if (clientes == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -46,9 +51,8 @@ else
         </EditForm>
     </BSModal>
 
-    <BSLabel For="itemsPerPage">Resultados por p&#225;gina</BSLabel>
-    <BSBasicInput InputType="InputType.Text" Id="itemsPerPage" @bind-Value="@ItemsPerPage" />
 
+    <p> Resultados @(pagingMetadata.PageSize * (PaginaActual - 1)) - @(pagingMetadata.PageSize * PaginaActual) de @(pagingMetadata.TotalCount)</p>
     <BSTable IsResponsive="true" IsStriped="true">
         <BSTableHead>
             <BSTableRow>
@@ -70,46 +74,74 @@ else
             }
         </BSTableBody>
     </BSTable>
-    <p>Mostrando {pagingMetadata.PageSize} de {pagingMetadata.TotalCount }</p>
-    <BSPagination Alignment="Alignment.Center">
-        <BSPaginationItem IsDisabled="(pagingMetadata.HasPrevious)">
-            <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.PreviousText" />
-        </BSPaginationItem>
-        @for (int i = 1; i < pagingMetadata.TotalPages; i++)
-        {
-            <BSPaginationItem>
-                <BSPaginationLink Href="" @onclick="@(() => GetAllClientesPaged(i))" PaginationLinkType="PaginationLinkType.Custom">@i</BSPaginationLink>
-            </BSPaginationItem>
-        }
-        <BSPaginationItem  IsDisabled="(pagingMetadata.HasNext)">
-            <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.NextText" />
-        </BSPaginationItem>
-    </BSPagination>
+    <BSContainer>
+        <BSRow>
+            <BSCol XS="auto">
+                <BSLabel For="itemsPerPageText">Resultados por pagina</BSLabel>
+            </BSCol>
+            <BSCol XS="auto">
+                <Dropdown TItem="string" OnSelected="@OnSelected">
+                    <InitialTip>@ItemsPerPage</InitialTip>
+                    <ChildContent>
+                        @foreach (var item in ItemsPerPageList)
+                        {
+                            <DropdownListItem Item="@item">@item</DropdownListItem>
+                        }
+                    </ChildContent>
+                </Dropdown>
+            </BSCol>
+        </BSRow>
+    </BSContainer>
+
+
+    <Paginacion PaginasTotales="PaginasTotales" PaginaActual="PaginaActual" PaginaSeleccionada="PaginaSeleccionada"></Paginacion>
+
 }
 @code {
     BSModal NuevoClienteModal;
-    private List<Cliente> clientes = new List<Cliente>();
+    public List<Cliente> clientes { get; set; }
     private Cliente newCliente = new Cliente();
-    private PaginationDTO Page = new PaginationDTO();
     private PagingMetadata pagingMetadata = new PagingMetadata();
-    private string ItemsPerPage = "2";
+    string ItemsPerPage = "5";
+    List<string> ItemsPerPageList = new List<string> { "5", "10", "20", "25", "50" };
+    string errorString;
+    //Paging
+    public int PaginaActual { get; set; } = 1;
+    public int PaginasTotales { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        await GetAllClientesPaged(1);
+        await GetAllClientesPaged(PaginaActual);
+        PaginasTotales = pagingMetadata.TotalPages;
     }
 
     private async Task GetAllClientesPaged(int page)
     {
         pagingMetadata.CurrentPage = page;
-        var response = await Http.GetAsync("https://localhost:44356/api/clientes?pageNumber=" + page.ToString() + "&pageSize=" + ItemsPerPage);
-        response.EnsureSuccessStatusCode();
-        clientes = JsonSerializer.Deserialize<List<Cliente>>( await response.Content.ReadAsStringAsync());
-        var entries = response.Headers.FirstOrDefault(q => q.Key == "X-Pagination").Value.FirstOrDefault();
-        pagingMetadata =  JsonSerializer.Deserialize<PagingMetadata>(entries.ToString());
+        var request = new HttpRequestMessage(HttpMethod.Get,
+            "clientes?pageNumber=" + page.ToString() + "&pageSize=" + ItemsPerPage);
+        var client = _clientFactory.CreateClient("fortunaapi");
+        Task<HttpResponseMessage> response = client.SendAsync(request);
 
+        if (response.Result.IsSuccessStatusCode)
+        {
+            clientes = JsonSerializer.Deserialize<List<Cliente>>(await response.Result.Content.ReadAsStringAsync());
+            var entries = response.Result.Headers.FirstOrDefault(q => q.Key == "X-Pagination").Value.FirstOrDefault();
+            pagingMetadata = JsonSerializer.Deserialize<PagingMetadata>(entries.ToString());
+        }
+        else
+        {
+            errorString = $"Hubo un error obteniendo los clientes: {response.Result.ReasonPhrase}";
+        }
 
     }
+
+    private async void OnSelected(string selection)
+    {
+        ItemsPerPage = selection;
+        await GetAllClientesPaged(PaginaActual);
+    }
+
 
     private void Sort()
     {
@@ -118,13 +150,30 @@ else
 
     private async Task InsertCliente()
     {
-        await Http.PostJsonAsync("https://localhost:44356/api/clientes", newCliente);
+        var client = _clientFactory.CreateClient("fortunaapi");
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Post,
+            RequestUri = new Uri(client.BaseAddress + "clientes"),
+            Content = new StringContent(JsonSerializer.Serialize(newCliente), Encoding.UTF8, "application/json")
+        };
+        Task<HttpResponseMessage> response = client.SendAsync(request);
 
-        clientes.ToList().Add(newCliente);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            await GetAllClientesPaged(PaginaActual);
+        }
+        else
+        {
+            errorString = $"Hubo un error insertando el nuevo cliente: {response.Result.ReasonPhrase}";
+            return;
+        }
+    }
 
-        newCliente = new Cliente();
-
-        await GetAllClientesPaged(Page.PageNumber);
+    private async void PaginaSeleccionada(int pagina)
+    {
+        PaginaActual = pagina;
+        await GetAllClientesPaged(pagina);
     }
 
 }

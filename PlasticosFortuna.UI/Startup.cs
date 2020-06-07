@@ -33,6 +33,12 @@ namespace PlasticosFortuna.UI
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<HttpClient>();
             services.AddBootstrapCss();
+            services.AddHttpClient();
+            services.AddHttpClient("fortunaapi", c =>
+                {
+                    c.BaseAddress = new Uri(Configuration.GetValue<string>("FortunaAPI"));
+                }
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
