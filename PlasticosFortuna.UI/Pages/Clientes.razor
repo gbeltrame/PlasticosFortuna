@@ -21,7 +21,8 @@ else if (clientes == null)
 }
 else
 {
-    <BSButton Color="Color.Primary" @onclick="@(() => NuevoClienteModal.Show())">Launch demo modal</BSButton>
+
+    <BSButton Color="Color.Primary" @onclick="@(() => NuevoClienteModal.Show())">Nuevo Cliente  <i class="oi oi-person"></i></BSButton>
     <p />
     <BSModal @ref="NuevoClienteModal">
         <EditForm Model="@newCliente" OnValidSubmit="@InsertCliente">
@@ -50,22 +51,46 @@ else
             </BSModalFooter>
         </EditForm>
     </BSModal>
-
+    <BSModal @ref="ConfirmacionEliminarClienteModal">
+        <BSModalHeader OnClick="@(() => ConfirmacionEliminarClienteModal.Hide())">Modal title</BSModalHeader>
+        <BSModalBody><p>Esta seguro que desea eliminar al cliente @clienteNameToDelete ?</p></BSModalBody>
+        <BSModalFooter>
+            <BSButton Color="Color.Secondary" @onclick="@(() => ConfirmacionEliminarClienteModal.Hide())">Cancelar</BSButton>
+            <BSButton Color="Color.Primary" @onclick="@(() => RemoveCliente(clienteIdToDelete))">OK</BSButton>
+        </BSModalFooter>
+    </BSModal>
 
     <p> Resultados @(pagingMetadata.PageSize * (PaginaActual - 1)) - @(pagingMetadata.PageSize * PaginaActual) de @(pagingMetadata.TotalCount)</p>
     <BSTable IsResponsive="true" IsStriped="true">
         <BSTableHead>
             <BSTableRow>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Acci&#243;n</a></BSTableHeadCell>
                 <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Nro. Cliente</a></BSTableHeadCell>
                 <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Nombre</a></BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Descripcion</a></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Descripci&#243;n</a></BSTableHeadCell>
                 <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Email</a></BSTableHeadCell>
             </BSTableRow>
         </BSTableHead>
         <BSTableBody>
             @foreach (var cliente in clientes)
             {
+                var editIconID = "editIcon" + @cliente.Id;
+                var deleteIconID = "deleteIcon" + @cliente.Id;
                 <BSTableRow>
+                    <BSTableCell>
+                        <BSContainer>
+                            <BSRow>
+                                <BSCol XS="6">
+                                    <a><i id="@editIconID" class="oi oi-pencil"></i></a>
+                                    <BSTooltip Target="@editIconID" Placement="Placement.Top">Editar</BSTooltip>
+                                </BSCol>
+                                <BSCol XS="6">
+                                    <a><i id="@deleteIconID" class="oi oi-trash" @onclick="@(() => ClienteToRemove(cliente.Id, cliente.Nombre))"></i></a>
+                                    <BSTooltip Target="@deleteIconID" Placement="Placement.Top">Eliminar</BSTooltip>
+                                </BSCol>
+                            </BSRow>
+                        </BSContainer>
+                    </BSTableCell>
                     <BSTableCell>@cliente.Id</BSTableCell>
                     <BSTableCell>@cliente.Nombre</BSTableCell>
                     <BSTableCell>@cliente.Descripcion</BSTableCell>
@@ -77,7 +102,7 @@ else
     <BSContainer>
         <BSRow>
             <BSCol XS="auto">
-                <BSLabel For="itemsPerPageText">Resultados por pagina</BSLabel>
+                <BSLabel For="itemsPerPageText">Resultados por p&#225;gina</BSLabel>
             </BSCol>
             <BSCol XS="auto">
                 <Dropdown TItem="string" OnSelected="@OnSelected">
@@ -99,12 +124,15 @@ else
 }
 @code {
     BSModal NuevoClienteModal;
+    BSModal ConfirmacionEliminarClienteModal;
     public List<Cliente> clientes { get; set; }
     private Cliente newCliente = new Cliente();
     private PagingMetadata pagingMetadata = new PagingMetadata();
     string ItemsPerPage = "5";
     List<string> ItemsPerPageList = new List<string> { "5", "10", "20", "25", "50" };
     string errorString;
+    string clienteNameToDelete;
+    int clienteIdToDelete;
     //Paging
     public int PaginaActual { get; set; } = 1;
     public int PaginasTotales { get; set; }
@@ -128,6 +156,7 @@ else
             clientes = JsonSerializer.Deserialize<List<Cliente>>(await response.Result.Content.ReadAsStringAsync());
             var entries = response.Result.Headers.FirstOrDefault(q => q.Key == "X-Pagination").Value.FirstOrDefault();
             pagingMetadata = JsonSerializer.Deserialize<PagingMetadata>(entries.ToString());
+            PaginasTotales = pagingMetadata.TotalPages;
         }
         else
         {
@@ -136,9 +165,40 @@ else
 
     }
 
+    private void ClienteToRemove(int Id, string Nombre)
+    {
+        clienteIdToDelete = Id;
+        clienteNameToDelete = Nombre;
+        ConfirmacionEliminarClienteModal.Show();
+    }
+
+    private async Task RemoveCliente(int clienteId)
+    {
+        var client = _clientFactory.CreateClient("fortunaapi");
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Delete,
+            RequestUri = new Uri(client.BaseAddress + "clientes/" + clienteId.ToString())
+        };
+        Task<HttpResponseMessage> response = client.SendAsync(request);
+
+        if (response.Result.IsSuccessStatusCode)
+        {
+            await GetAllClientesPaged(PaginaActual);
+            ConfirmacionEliminarClienteModal.Hide();
+        }
+        else
+        {
+            errorString = $"Hubo un error eliminando al cliente: {response.Result.ReasonPhrase}";
+            ConfirmacionEliminarClienteModal.Hide();
+            return;
+        }
+    }
+
     private async void OnSelected(string selection)
     {
         ItemsPerPage = selection;
+        PaginaActual = 1;
         await GetAllClientesPaged(PaginaActual);
     }
 
