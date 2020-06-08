@@ -6,6 +6,7 @@
 @using System.Text.Json;
 @using System.Text.Json.Serialization;
 @using System.Text;
+@using System.Timers;
 @inject IHttpClientFactory _clientFactory;
 
 
@@ -24,43 +25,43 @@ else
 
     <BSButton Color="Color.Primary" @onclick="NuevoClienteForm">Nuevo Cliente  <i class="oi oi-person"></i></BSButton>
     <p />
-    <BSModal @ref="NuevoClienteModal">
-        <BSForm Model="@newCliente" OnValidSubmit="@InsertCliente" >
-            <BSModalHeader OnClick="@(() => NuevoClienteModal.Hide())">Nuevo Cliente</BSModalHeader>
+    <BSModal @ref="ClienteModal">
+        <BSForm Model="@clienteModel" OnValidSubmit="@SubmitCliente">
+            <BSModalHeader OnClick="@(() => ClienteModal.Hide())">@modalTitle</BSModalHeader>
             <BSModalBody>
-                    <DataAnnotationsValidator />
-                    <BSRow>
-                        <BSFormGroup Class="col-md-12">
-                            <BSLabel For="nombre">Nombre</BSLabel>
-                            <BSInput InputType="InputType.Text" Id="nombre" @bind-Value="@newCliente.Nombre" />
-                            <BSFormFeedback For="@(() => newCliente.Nombre)"  ValidMessage="" />
-                        </BSFormGroup>
-                        
-                        <BSFormGroup Class="col-md-12">
-                            <BSLabel For="descripcion">Descripci&#243;n</BSLabel>
-                            <BSInput Id="descripcion" InputType="InputType.TextArea" @bind-Value="@newCliente.Descripcion" />
-                            <BSFormFeedback For="@(() => newCliente.Descripcion)" ValidMessage="" />
-                        </BSFormGroup>
-                        
-                        <BSFormGroup Class="col-md-12">
-                            <BSLabel For="email">Direcci&#243;n de correo electronico</BSLabel>
-                            <BSInput Id="email" InputType="InputType.Text" @bind-Value="@newCliente.Email" />
-                            <BSFormFeedback For="@(() => newCliente.Email)" ValidMessage="" />
-                        </BSFormGroup>
-                    </BSRow>
+                <DataAnnotationsValidator />
+                <BSRow>
+                    <BSFormGroup Class="col-md-12">
+                        <BSLabel For="nombre">Nombre</BSLabel>
+                        <BSInput InputType="InputType.Text" Id="nombre" @bind-Value="@clienteModel.Nombre" />
+                        <BSFormFeedback For="@(() => clienteModel.Nombre)" ValidMessage="" />
+                    </BSFormGroup>
+
+                    <BSFormGroup Class="col-md-12">
+                        <BSLabel For="descripcion">Descripci&#243;n</BSLabel>
+                        <BSInput Id="descripcion" InputType="InputType.TextArea" @bind-Value="@clienteModel.Descripcion" />
+                        <BSFormFeedback For="@(() => clienteModel.Descripcion)" ValidMessage="" />
+                    </BSFormGroup>
+
+                    <BSFormGroup Class="col-md-12">
+                        <BSLabel For="email">Direcci&#243;n de correo electronico</BSLabel>
+                        <BSInput Id="email" InputType="InputType.Text" @bind-Value="@clienteModel.Email" />
+                        <BSFormFeedback For="@(() => clienteModel.Email)" ValidMessage="" />
+                    </BSFormGroup>
+                </BSRow>
             </BSModalBody>
             <BSModalFooter>
-                <BSButton Color="Color.Secondary" @onclick="@(() => NuevoClienteModal.Hide())">Cerrar</BSButton>
-                <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary">Crear</BSButton>
+                <BSButton Color="Color.Secondary" @onclick="@(() => ClienteModal.Hide())">Cancelar</BSButton>
+                <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary">@modalButtonText</BSButton>
             </BSModalFooter>
         </BSForm>
     </BSModal>
     <BSModal @ref="ConfirmacionEliminarClienteModal">
-        <BSModalHeader OnClick="@(() => ConfirmacionEliminarClienteModal.Hide())">Modal title</BSModalHeader>
+        <BSModalHeader OnClick="@(() => ConfirmacionEliminarClienteModal.Hide())">@modalTitle</BSModalHeader>
         <BSModalBody><p>Esta seguro que desea eliminar al cliente @clienteNameToDelete ?</p></BSModalBody>
         <BSModalFooter>
             <BSButton Color="Color.Secondary" @onclick="@(() => ConfirmacionEliminarClienteModal.Hide())">Cancelar</BSButton>
-            <BSButton Color="Color.Primary" @onclick="@(() => RemoveCliente(clienteIdToDelete))">OK</BSButton>
+            <BSButton Color="Color.Primary" @onclick="@(() => RemoveCliente(clienteIdToDelete))">@modalButtonText</BSButton>
         </BSModalFooter>
     </BSModal>
 
@@ -85,7 +86,7 @@ else
                         <BSContainer>
                             <BSRow>
                                 <BSCol XS="6">
-                                    <a><i id="@editIconID" class="oi oi-pencil"></i></a>
+                                    <a><i id="@editIconID" class="oi oi-pencil" @onclick="@(() => ClienteToEdit(cliente))"></i></a>
                                     <BSTooltip Target="@editIconID" Placement="Placement.Top">Editar</BSTooltip>
                                 </BSCol>
                                 <BSCol XS="6">
@@ -96,8 +97,8 @@ else
                         </BSContainer>
                     </BSTableCell>
                     <BSTableCell>@cliente.Id</BSTableCell>
-                    <BSTableCell>@cliente.Nombre</BSTableCell>
-                    <BSTableCell>@cliente.Descripcion</BSTableCell>
+                    <BSTableCell>@(cliente.Nombre.Length > maxCellCharLength ? TruncateLongString(cliente.Nombre, maxCellCharLength) + "..." : TruncateLongString(cliente.Nombre, maxCellCharLength))</BSTableCell>
+                    <BSTableCell>@(cliente.Descripcion.Length > maxCellCharLength ?  TruncateLongString(cliente.Descripcion, maxCellCharLength) + "..." : TruncateLongString(cliente.Descripcion, maxCellCharLength) )</BSTableCell>
                     <BSTableCell>@cliente.Email</BSTableCell>
                 </BSTableRow>
             }
@@ -127,19 +128,27 @@ else
 
 }
 @code {
-    BSModal NuevoClienteModal;
+    // Modals
+    BSModal ClienteModal;
     BSModal ConfirmacionEliminarClienteModal;
+    string modalTitle;
+    string modalButtonText;
+    BSToast Toast;
+
+
     public List<Cliente> clientes { get; set; }
-    private Cliente newCliente = new Cliente();
+    private Cliente clienteModel = new Cliente();
     private PagingMetadata pagingMetadata = new PagingMetadata();
-    string ItemsPerPage = "5";
-    List<string> ItemsPerPageList = new List<string> { "5", "10", "20", "25", "50" };
     string errorString;
     string clienteNameToDelete;
     int clienteIdToDelete;
+    int maxCellCharLength = 25;
+
     //Paging
     public int PaginaActual { get; set; } = 1;
     public int PaginasTotales { get; set; }
+    string ItemsPerPage = "5";
+    List<string> ItemsPerPageList = new List<string> { "5", "10", "20", "25", "50" };
 
     protected override async Task OnInitializedAsync()
     {
@@ -173,6 +182,8 @@ else
     {
         clienteIdToDelete = Id;
         clienteNameToDelete = Nombre;
+        modalTitle = "Eliminar Cliente";
+        modalButtonText = "Ok";
         ConfirmacionEliminarClienteModal.Show();
     }
 
@@ -206,7 +217,6 @@ else
         await GetAllClientesPaged(PaginaActual);
     }
 
-
     private void Sort()
     {
         clientes.ToList().Sort();
@@ -219,11 +229,11 @@ else
         {
             Method = HttpMethod.Post,
             RequestUri = new Uri(client.BaseAddress + "clientes"),
-            Content = new StringContent(JsonSerializer.Serialize(newCliente), Encoding.UTF8, "application/json")
+            Content = new StringContent(JsonSerializer.Serialize(clienteModel), Encoding.UTF8, "application/json")
         };
         Task<HttpResponseMessage> response = client.SendAsync(request);
 
-        NuevoClienteModal.Hide();
+        ClienteModal.Hide();
 
         if (response.Result.IsSuccessStatusCode)
         {
@@ -236,6 +246,18 @@ else
         }
     }
 
+    private async void SubmitCliente()
+    {
+        if (clienteModel.Id == 0)
+        {
+            await InsertCliente();
+        }
+        else
+        {
+            await EditCliente();
+        }
+    }
+
     private async void PaginaSeleccionada(int pagina)
     {
         PaginaActual = pagina;
@@ -244,7 +266,48 @@ else
 
     private void NuevoClienteForm()
     {
-        newCliente = new Cliente();
-        NuevoClienteModal.Show();
+        modalButtonText = "Crear";
+        modalTitle = "Nuevo Cliente";
+        clienteModel = new Cliente();
+        ClienteModal.Show();
+    }
+
+    private void ClienteToEdit(Cliente cliente)
+    {
+        clienteModel = cliente;
+        modalButtonText = "Guardar";
+        modalTitle = "Editar Cliente";
+        ClienteModal.Show();
+    }
+
+    private async Task EditCliente()
+    {
+        var client = _clientFactory.CreateClient("fortunaapi");
+        var request = new HttpRequestMessage
+        {
+            Method = HttpMethod.Put,
+            RequestUri = new Uri(client.BaseAddress + "clientes"),
+            Content = new StringContent(JsonSerializer.Serialize(clienteModel), Encoding.UTF8, "application/json")
+        };
+        Task<HttpResponseMessage> response = client.SendAsync(request);
+
+        ClienteModal.Hide();
+
+        if (response.Result.IsSuccessStatusCode)
+        {
+            await GetAllClientesPaged(PaginaActual);
+        }
+        else
+        {
+            errorString = $"Hubo un error editando el nuevo cliente: {response.Result.ReasonPhrase}";
+            return;
+        }
+    }
+
+    public string TruncateLongString(string str, int maxLength)
+    {
+        if (string.IsNullOrEmpty(str))
+            return str;
+        return str.Substring(0, Math.Min(str.Length, maxLength));
     }
 }
