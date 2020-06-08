@@ -22,34 +22,38 @@ else if (clientes == null)
 else
 {
 
-    <BSButton Color="Color.Primary" @onclick="@(() => NuevoClienteModal.Show())">Nuevo Cliente  <i class="oi oi-person"></i></BSButton>
+    <BSButton Color="Color.Primary" @onclick="NuevoClienteForm">Nuevo Cliente  <i class="oi oi-person"></i></BSButton>
     <p />
     <BSModal @ref="NuevoClienteModal">
-        <EditForm Model="@newCliente" OnValidSubmit="@InsertCliente">
+        <BSForm Model="@newCliente" OnValidSubmit="@InsertCliente" >
             <BSModalHeader OnClick="@(() => NuevoClienteModal.Hide())">Nuevo Cliente</BSModalHeader>
             <BSModalBody>
-                <p>
                     <DataAnnotationsValidator />
-                    <ValidationSummary />
-                    <BSFormGroup>
-                        <BSLabel For="nombre">Nombre</BSLabel>
-                        <BSInput Id="nombre" @bind-Value="@newCliente.Nombre" />
-                    </BSFormGroup>
-                    <BSFormGroup>
-                        <BSLabel For="descripcion">Descripci&#243;n</BSLabel>
-                        <BSBasicInput Id="descripcion" InputType="InputType.TextArea" @bind-Value="@newCliente.Descripcion" />
-                    </BSFormGroup>
-                    <BSFormGroup>
-                        <BSLabel For="email">Direcci&#243;n de correo electronico</BSLabel>
-                        <BSInput Id="email" InputType="InputType.Email" @bind-Value="@newCliente.Email" />
-                    </BSFormGroup>
-                </p>
+                    <BSRow>
+                        <BSFormGroup Class="col-md-12">
+                            <BSLabel For="nombre">Nombre</BSLabel>
+                            <BSInput InputType="InputType.Text" Id="nombre" @bind-Value="@newCliente.Nombre" />
+                            <BSFormFeedback For="@(() => newCliente.Nombre)"  ValidMessage="" />
+                        </BSFormGroup>
+                        
+                        <BSFormGroup Class="col-md-12">
+                            <BSLabel For="descripcion">Descripci&#243;n</BSLabel>
+                            <BSInput Id="descripcion" InputType="InputType.TextArea" @bind-Value="@newCliente.Descripcion" />
+                            <BSFormFeedback For="@(() => newCliente.Descripcion)" ValidMessage="" />
+                        </BSFormGroup>
+                        
+                        <BSFormGroup Class="col-md-12">
+                            <BSLabel For="email">Direcci&#243;n de correo electronico</BSLabel>
+                            <BSInput Id="email" InputType="InputType.Text" @bind-Value="@newCliente.Email" />
+                            <BSFormFeedback For="@(() => newCliente.Email)" ValidMessage="" />
+                        </BSFormGroup>
+                    </BSRow>
             </BSModalBody>
             <BSModalFooter>
                 <BSButton Color="Color.Secondary" @onclick="@(() => NuevoClienteModal.Hide())">Cerrar</BSButton>
-                <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary" @onclick="@(() => NuevoClienteModal.Hide())">Crear</BSButton>
+                <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary" @onclick="SubmitNewCliente">Crear</BSButton>
             </BSModalFooter>
-        </EditForm>
+        </BSForm>
     </BSModal>
     <BSModal @ref="ConfirmacionEliminarClienteModal">
         <BSModalHeader OnClick="@(() => ConfirmacionEliminarClienteModal.Hide())">Modal title</BSModalHeader>
@@ -133,12 +137,14 @@ else
     string errorString;
     string clienteNameToDelete;
     int clienteIdToDelete;
+    private EditContext clienteEditContext { get; set; }
     //Paging
     public int PaginaActual { get; set; } = 1;
     public int PaginasTotales { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        clienteEditContext = new EditContext(newCliente);
         await GetAllClientesPaged(PaginaActual);
         PaginasTotales = pagingMetadata.TotalPages;
     }
@@ -236,4 +242,17 @@ else
         await GetAllClientesPaged(pagina);
     }
 
+    private void NuevoClienteForm()
+    {
+        newCliente = new Cliente();
+        NuevoClienteModal.Show();
+    }
+
+    private void SubmitNewCliente()
+    {
+        if (!clienteEditContext.Validate())
+        {
+            NuevoClienteModal.Hide();
+        }
+    }
 }
