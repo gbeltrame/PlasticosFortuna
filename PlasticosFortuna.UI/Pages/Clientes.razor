@@ -51,7 +51,7 @@ else
             </BSModalBody>
             <BSModalFooter>
                 <BSButton Color="Color.Secondary" @onclick="@(() => NuevoClienteModal.Hide())">Cerrar</BSButton>
-                <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary" @onclick="SubmitNewCliente">Crear</BSButton>
+                <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary">Crear</BSButton>
             </BSModalFooter>
         </BSForm>
     </BSModal>
@@ -137,14 +137,12 @@ else
     string errorString;
     string clienteNameToDelete;
     int clienteIdToDelete;
-    private EditContext clienteEditContext { get; set; }
     //Paging
     public int PaginaActual { get; set; } = 1;
     public int PaginasTotales { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        clienteEditContext = new EditContext(newCliente);
         await GetAllClientesPaged(PaginaActual);
         PaginasTotales = pagingMetadata.TotalPages;
     }
@@ -225,6 +223,8 @@ else
         };
         Task<HttpResponseMessage> response = client.SendAsync(request);
 
+        NuevoClienteModal.Hide();
+
         if (response.Result.IsSuccessStatusCode)
         {
             await GetAllClientesPaged(PaginaActual);
@@ -246,13 +246,5 @@ else
     {
         newCliente = new Cliente();
         NuevoClienteModal.Show();
-    }
-
-    private void SubmitNewCliente()
-    {
-        if (!clienteEditContext.Validate())
-        {
-            NuevoClienteModal.Hide();
-        }
     }
 }
