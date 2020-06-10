@@ -17,6 +17,8 @@ namespace PlasticosFortuna.Data
         public DbSet<OrdenDeTrabajo> OrdenesDeTrabajo { get; set; }
         public DbSet<Plastico> Plasticos { get; set; }
         public DbSet<Proveedor> Proveedores { get; set; }
+        public DbSet<UserModel> UserModel { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -133,5 +133,12 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netc
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\obj\Debug\netcoreapp3.1\PlasticosFortuna.Api.csproj.CoreCompileInputs.cache
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Api\obj\Debug\netcoreapp3.1\PlasticosFortuna.Api.MvcApplicationPartsAssemblyInfo.cache

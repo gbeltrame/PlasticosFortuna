@@ -19,4 +19,8 @@
     <ProjectReference Include="..\PlasticosFortuna.Shared\PlasticosFortuna.Shared\PlasticosFortuna.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\NewFolder\" />
+  </ItemGroup>
+
 </Project>
