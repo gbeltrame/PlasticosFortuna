@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazored.SessionStorage;
 using BlazorStrap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -28,10 +30,12 @@ namespace PlasticosFortuna.UI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<HttpClient>();
+            services.AddBlazoredSessionStorage();
             services.AddBootstrapCss();
             services.AddHttpClient();
             services.AddHttpClient("fortunaapi", c =>
@@ -39,6 +43,8 @@ namespace PlasticosFortuna.UI
                     c.BaseAddress = new Uri(Configuration.GetValue<string>("FortunaAPI"));
                 }
                 );
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,8 +63,9 @@ namespace PlasticosFortuna.UI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

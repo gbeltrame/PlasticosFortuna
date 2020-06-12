@@ -1,0 +1,47 @@
+﻿@page "/login"
+
+@using PlasticosFortuna.Shared;
+@using PlasticosFortuna.UI.Data;
+@inject AuthenticationStateProvider AuthenticationStateProvider;
+@inject NavigationManager NavigationManager;
+@inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+
+<div class="container login-container">
+    <div class="col-md-6 login-form-1">
+        <h3>Inicio de sesi&#243;n</h3>
+        <EditForm Model="@user" OnValidSubmit="@ValidateUser">
+            <div class="form-group">
+                <input type="text" class="form-control" @bind="user.LoginId" placeholder="Nombre de usuario *" />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" @bind="user.Password" placeholder="Contraseña *" />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btnSubmit" value="Login" />
+            </div>
+            <div class="form-group">
+                <a href="#" class="ForgetPwd">Olvid&#243; su contrase&#241;a?</a>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {        
+    private UserModel user;
+
+    protected override Task OnInitializedAsync()
+    {
+        user = new UserModel();
+        return base.OnInitializedAsync();
+    }
+
+    private async Task<bool> ValidateUser()
+    {
+        //TODO: Cambiar despues. Asumir verdadero por ahora
+        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAutheticated(user.LoginId);
+        NavigationManager.NavigateTo("/");
+        await sessionStorage.SetItemAsync("loginId", user.LoginId);
+        return await Task.FromResult(true);
+    }
+
+}

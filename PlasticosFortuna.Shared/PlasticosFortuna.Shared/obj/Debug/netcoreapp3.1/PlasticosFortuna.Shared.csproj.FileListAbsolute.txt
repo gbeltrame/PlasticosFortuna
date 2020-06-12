@@ -2,8 +2,8 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFo
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\bin\Debug\netcoreapp3.1\PlasticosFortuna.Shared.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\bin\Debug\netcoreapp3.1\PlasticosFortuna.Shared.pdb
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\obj\Debug\netcoreapp3.1\PlasticosFortuna.Shared.csprojAssemblyReference.cache
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\obj\Debug\netcoreapp3.1\PlasticosFortuna.Shared.csproj.CoreCompileInputs.cache
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\obj\Debug\netcoreapp3.1\PlasticosFortuna.Shared.AssemblyInfoInputs.cache
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\obj\Debug\netcoreapp3.1\PlasticosFortuna.Shared.AssemblyInfo.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\obj\Debug\netcoreapp3.1\PlasticosFortuna.Shared.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\obj\Debug\netcoreapp3.1\PlasticosFortuna.Shared.pdb
-C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.Shared\PlasticosFortuna.Shared\obj\Debug\netcoreapp3.1\PlasticosFortuna.Shared.csproj.CoreCompileInputs.cache

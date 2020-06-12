@@ -1,17 +1,12 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<h1>Plasticos Fortuna</h1>
 
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
-
-Bootstrap 4 Example
-
-<BSButton Color="Color.Primary">Primary</BSButton>
-
-<BSButton Color="Color.Success">Primary</BSButton>
-
-<BSButton Color="Color.Info">Primary</BSButton>
-
-<BSButton Color="Color.Danger">Primary</BSButton>
+<AuthorizeView>
+    <Authorized>
+        <p>Bienvenido, @context.User.Identity.Name </p>
+    </Authorized>
+    <NotAuthorized>
+        <p>No has iniciado sesi&#243;n</p>
+    </NotAuthorized>
+</AuthorizeView>

@@ -112,6 +112,10 @@
               "target": "Package",
               "version": "[1.3.2, )"
             },
+            "Blazored.SessionStorage": {
+              "target": "Package",
+              "version": "[1.0.11, )"
+            },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
               "version": "[2.2.2, )"
