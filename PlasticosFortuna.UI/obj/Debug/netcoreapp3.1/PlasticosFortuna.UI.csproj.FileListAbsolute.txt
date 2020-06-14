@@ -104,9 +104,7 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netco
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\PlasticosFortuna.UI.RazorComponent.input.cache
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\App.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Clientes.razor.g.cs
-C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Counter.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Error.razor.g.cs
-C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\FetchData.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Index.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\Login.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\Dropdown.razor.g.cs
@@ -139,9 +137,7 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netco
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\PlasticosFortuna.UI.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\App.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Pages\Clientes.razor.g.cs
-C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Pages\Counter.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Pages\Error.razor.g.cs
-C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Pages\FetchData.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Pages\Index.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Pages\Login.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Shared\Dropdown.razor.g.cs

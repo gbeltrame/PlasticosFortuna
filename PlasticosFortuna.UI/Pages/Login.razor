@@ -2,9 +2,11 @@
 
 @using PlasticosFortuna.Shared;
 @using PlasticosFortuna.UI.Data;
+@using PlasticosFortuna.UI.Services; 
 @inject AuthenticationStateProvider AuthenticationStateProvider;
 @inject NavigationManager NavigationManager;
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject IUserService userService
 
 <div class="container login-container">
     <div class="col-md-6 login-form-1">
@@ -37,11 +39,20 @@
 
     private async Task<bool> ValidateUser()
     {
-        //TODO: Cambiar despues. Asumir verdadero por ahora
-        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAutheticated(user.LoginId);
-        NavigationManager.NavigateTo("/");
-        await sessionStorage.SetItemAsync("loginId", user.LoginId);
-        return await Task.FromResult(true);
+
+        var returnedUser = await userService.LoginAsync(user);
+
+        if(returnedUser.LoginId != null)
+        {
+            ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAutheticated(user.LoginId);
+            //await sessionStorage.SetItemAsync("loginId", user.LoginId);
+            NavigationManager.NavigateTo("/");
+            return await Task.FromResult(true);
+        }
+        else
+        {
+            return await Task.FromResult(false);
+        }
     }
 
 }

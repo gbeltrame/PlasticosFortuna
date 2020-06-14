@@ -2,10 +2,16 @@
 @using PlasticosFortuna.UI.Data
 @inject IBootstrapCss BootstrapCss
 @inject AuthenticationStateProvider AuthenticationStateProvider
+<AuthorizeView>
+    <Authorized>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    </Authorized>
+    <NotAuthorized>
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+    </NotAuthorized>
+</AuthorizeView>
 
 <div class="main">
     <div class="top-row px-4">
@@ -42,7 +48,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstrun)
     {
-        if(isServerSide && firstrun)
+        if (isServerSide && firstrun)
         {
             await BootstrapCss.SetBootstrapCss("4.3.1");
         }

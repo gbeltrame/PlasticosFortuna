@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlasticosFortuna.UI.Data;
+using PlasticosFortuna.UI.Services;
 
 namespace PlasticosFortuna.UI
 {
@@ -33,18 +34,23 @@ namespace PlasticosFortuna.UI
             
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<HttpClient>();
             services.AddBlazoredSessionStorage();
             services.AddBootstrapCss();
             services.AddHttpClient();
+            services.AddHttpClient<IUserService, UserService>( c =>
+            {
+                c.BaseAddress = new Uri(Configuration.GetValue<string>("FortunaAPI"));
+            }
+    );
             services.AddHttpClient("fortunaapi", c =>
                 {
                     c.BaseAddress = new Uri(Configuration.GetValue<string>("FortunaAPI"));
                 }
                 );
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-            
+            services.AddScoped<ISessionStorageService, SessionStorageService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

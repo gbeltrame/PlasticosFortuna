@@ -23,7 +23,7 @@ namespace PlasticosFortuna.Data.Repositories
             UserModel response = new UserModel();
 
 
-            return _appDbContext.UserModel.Include("UserRole").FirstOrDefault(u => u.LoginId == user.LoginId && u.Password == user.Password);
+            return _appDbContext.UserModel.Include("UserRole").FirstOrDefault(u => u.LoginId == user.LoginId);
 
             
 

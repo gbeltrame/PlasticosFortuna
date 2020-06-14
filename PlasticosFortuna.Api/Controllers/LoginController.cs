@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using PlasticosFortuna.Data.Repositories;
 using PlasticosFortuna.Shared;
 
@@ -29,20 +30,21 @@ namespace PlasticosFortuna.Api.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet]
-        public IActionResult Login(string username, string password)
+        [HttpPost]
+        public IActionResult Login([FromBody] UserModel login)
         {
-            UserModel login = new UserModel();
-            login.LoginId = username;
-            login.Password = password;
+            
             IActionResult response = Unauthorized();
 
             var user = AuthenticateUser(login);
 
-            if(user != null)
+            String hashedPassword = GenerateSHA256Hash(login.Password, user.Salt);
+
+            if (user != null && (user.Password == hashedPassword))
             {
                 var tokenStr = GenerateJSONWebToken(user);
-                response = Ok(new { token = tokenStr });
+                Response.Headers.Add("X-AuthenticationToken", tokenStr);
+                response = Ok(new { user.EmailAddress,  user.LoginId, user.Salt, user.UserName, user.UserRole});
             }
 
             return response;
@@ -51,6 +53,33 @@ namespace PlasticosFortuna.Api.Controllers
         private UserModel AuthenticateUser( UserModel login)
         {
             return _userRepository.GetLoginUser(login);
+        }
+
+        private String CreateSalt(int size)
+        {
+            var rng = RandomNumberGenerator.Create();
+            var buff = new byte[size];
+            rng.GetBytes(buff);
+            return Convert.ToBase64String(buff);
+        }
+
+        private String GenerateSHA256Hash(String input, String salt)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(input + salt);
+            SHA256 sha256HashString = SHA256.Create();
+            byte[] hash = sha256HashString.ComputeHash(bytes);
+
+            return ByteArrayToHexString(hash);
+        }
+
+        private string ByteArrayToHexString(byte[] hash)
+        {
+            StringBuilder hex = new StringBuilder(hash.Length * 2);
+            foreach (byte c in hash)
+            {
+                hex.AppendFormat("{0:x2}", c);
+            }
+            return hex.ToString();
         }
 
         private string GenerateJSONWebToken(UserModel userInfo)
