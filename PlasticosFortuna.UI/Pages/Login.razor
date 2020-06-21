@@ -44,8 +44,7 @@
 
         if(returnedUser.LoginId != null)
         {
-            ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAutheticated(user.LoginId);
-            //await sessionStorage.SetItemAsync("loginId", user.LoginId);
+            ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAutheticated(returnedUser);
             NavigationManager.NavigateTo("/");
             return await Task.FromResult(true);
         }

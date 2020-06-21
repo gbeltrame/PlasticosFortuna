@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "+pdWElbkVzlyiL0zm4cunlaadukWOcC/od+6fSIgOa5KEff0qbtIRMc8H5DV4zoSCVJbx2AxbJXi7oPgZ9PhFQ==",
+  "dgSpecHash": "9BbUYpGxKfFvPAv4QoKBg4or1kyoN6yebzaDMVWMhCDkQzCsRWvb2T1xb8tpINC8p4f04JWtvmQ9PXO/gPzl8g==",
   "success": true,
   "projectFilePath": "C:\\Users\\beltr\\source\\repos\\PlasticosFortuna\\PlasticosFortuna.UI\\PlasticosFortuna.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\beltr\\.nuget\\packages\\blazorcomponentutilities\\1.6.0\\blazorcomponentutilities.1.6.0.nupkg.sha512",
     "C:\\Users\\beltr\\.nuget\\packages\\blazored.sessionstorage\\1.0.11\\blazored.sessionstorage.1.0.11.nupkg.sha512",
+    "C:\\Users\\beltr\\.nuget\\packages\\blazored.toast\\3.1.2\\blazored.toast.3.1.2.nupkg.sha512",
     "C:\\Users\\beltr\\.nuget\\packages\\blazorstrap\\1.3.2\\blazorstrap.1.3.2.nupkg.sha512",
     "C:\\Users\\beltr\\.nuget\\packages\\microsoft.aspnetcore.authorization\\3.1.4\\microsoft.aspnetcore.authorization.3.1.4.nupkg.sha512",
     "C:\\Users\\beltr\\.nuget\\packages\\microsoft.aspnetcore.components\\3.1.4\\microsoft.aspnetcore.components.3.1.4.nupkg.sha512",

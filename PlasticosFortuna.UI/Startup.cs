@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Blazored.SessionStorage;
+using Blazored.Toast;
 using BlazorStrap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -50,6 +51,7 @@ namespace PlasticosFortuna.UI
                 );
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             services.AddScoped<ISessionStorageService, SessionStorageService>();
+            services.AddBlazoredToast();
 
         }
 

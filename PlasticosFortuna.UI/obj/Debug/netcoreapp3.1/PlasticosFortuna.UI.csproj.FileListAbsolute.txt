@@ -134,6 +134,7 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netco
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\bin\Debug\netcoreapp3.1\Blazored.SessionStorage.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\PlasticosFortuna.UI.csproj.CoreCompileInputs.cache
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\PlasticosFortuna.UI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\bin\Debug\netcoreapp3.1\Blazored.Toast.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\PlasticosFortuna.UI.dll
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\App.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Pages\Clientes.razor.g.cs

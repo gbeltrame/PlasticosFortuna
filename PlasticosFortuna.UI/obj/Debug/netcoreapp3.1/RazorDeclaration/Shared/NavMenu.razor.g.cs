@@ -83,6 +83,27 @@ using BlazorStrap;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 11 "C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\_Imports.razor"
+using PlasticosFortuna.UI.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\_Imports.razor"
+using Blazored.Toast;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\_Imports.razor"
+using Blazored.Toast.Services;
+
+#line default
+#line hidden
+#nullable disable
     public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

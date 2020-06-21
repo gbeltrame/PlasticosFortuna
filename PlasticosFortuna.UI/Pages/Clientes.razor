@@ -1,13 +1,10 @@
 ﻿@page "/clientes"
 
 @using PlasticosFortuna.Shared;
-@using BlazorStrap.Util;
-@using BlazorStrap.Extensions;
 @using System.Text.Json;
-@using System.Text.Json.Serialization;
 @using System.Text;
-@using System.Timers;
 @inject IHttpClientFactory _clientFactory;
+@inject IToastService toastService;
 
 
 <h3>Clientes</h3>
@@ -18,7 +15,7 @@
 }
 else if (clientes == null)
 {
-    <p><em>Loading...</em></p>
+    <div class="spinner"></div>
 }
 else
 {
@@ -69,11 +66,18 @@ else
     <BSTable IsResponsive="true" IsStriped="true">
         <BSTableHead>
             <BSTableRow>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Acci&#243;n</a></BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Nro. Cliente</a></BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Nombre</a></BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Descripci&#243;n</a></BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="javascript:void(0)" @onclick="@(Sort)" @onclick:preventDefault>Email</a></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col">Acci&#243;n</BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="" @onclick="@(() => Sort("Id"))" @onclick:preventDefault>Nro. Cliente</a> <i style="visibility:@(OrderByField == "Id"? "visible" : "hidden")" class="oi oi-caret-@(OrderType == "asc"? "bottom":"top")" /></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="" @onclick="@(() => Sort("Nombre"))" @onclick:preventDefault>Nombre</a> <i style="visibility:@(OrderByField == "Nombre"? "visible" : "hidden")" class="oi oi-caret-@(OrderType == "asc"? "bottom":"top")" /></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="" @onclick="@(() => Sort("Descripcion"))" @onclick:preventDefault>Descripci&#243;n</a> <i style="visibility:@(OrderByField == "Descripcion"? "visible" : "hidden")" class="oi oi-caret-@(OrderType == "asc"? "bottom":"top")" /></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="" @onclick="@(() => Sort("Email"))" @onclick:preventDefault>Email</a> <i style="visibility:@(OrderByField == "Email"? "visible" : "hidden")" class="oi oi-caret-@(OrderType == "asc"? "bottom":"top")" /></BSTableHeadCell>
+            </BSTableRow>
+            <BSTableRow>
+                <BSTableHeadCell Color="Color.Dark" scope="col">Filtros</BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Inserte Valor Filtro"></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><input type="email" class="form-control" id="exampleFormControlInput2" placeholder="Inserte Valor Filtro"></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><input type="email" class="form-control" id="exampleFormControlInput3" placeholder="Inserte Valor Filtro"></BSTableHeadCell>
+                <BSTableHeadCell Color="Color.Dark" scope="col"><input type="email" class="form-control" id="exampleFormControlInput4" placeholder="Inserte Valor Filtro"></BSTableHeadCell>                
             </BSTableRow>
         </BSTableHead>
         <BSTableBody>
@@ -86,11 +90,11 @@ else
                         <BSContainer>
                             <BSRow>
                                 <BSCol XS="6">
-                                    <a><i id="@editIconID" class="oi oi-pencil" @onclick="@(() => ClienteToEdit(cliente))"></i></a>
+                                    <a style="cursor: pointer;"><i id="@editIconID" class="oi oi-pencil" @onclick="@(() => ClienteToEdit(cliente))"></i></a>
                                     <BSTooltip Target="@editIconID" Placement="Placement.Top">Editar</BSTooltip>
                                 </BSCol>
                                 <BSCol XS="6">
-                                    <a><i id="@deleteIconID" class="oi oi-trash" @onclick="@(() => ClienteToRemove(cliente.Id, cliente.Nombre))"></i></a>
+                                    <a style="cursor: pointer;"><i id="@deleteIconID" class="oi oi-trash" @onclick="@(() => ClienteToRemove(cliente.Id, cliente.Nombre))"></i></a>
                                     <BSTooltip Target="@deleteIconID" Placement="Placement.Top">Eliminar</BSTooltip>
                                 </BSCol>
                             </BSRow>
@@ -107,7 +111,7 @@ else
     <BSContainer>
         <BSRow>
             <BSCol XS="auto">
-                <BSLabel For="itemsPerPageText">Resultados por p&#225;gina</BSLabel>
+                <BSLabel For="itemsPerPageText"><span class="align-middle">Resultados por p&#225;gina</span></BSLabel>
             </BSCol>
             <BSCol XS="auto">
                 <Dropdown TItem="string" OnSelected="@OnSelected">
@@ -133,8 +137,6 @@ else
     BSModal ConfirmacionEliminarClienteModal;
     string modalTitle;
     string modalButtonText;
-    BSToast Toast;
-
 
     public List<Cliente> clientes { get; set; }
     private Cliente clienteModel = new Cliente();
@@ -143,6 +145,9 @@ else
     string clienteNameToDelete;
     int clienteIdToDelete;
     int maxCellCharLength = 25;
+    private string OrderByField = "Name";
+    private string OrderType = "asc";
+    private string FilterText;
 
     //Paging
     public int PaginaActual { get; set; } = 1;
@@ -152,15 +157,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await GetAllClientesPaged(PaginaActual);
+        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
         PaginasTotales = pagingMetadata.TotalPages;
     }
 
-    private async Task GetAllClientesPaged(int page)
+    private async Task GetAllClientesPaged(int page, string orderby, string ordertype)
     {
         pagingMetadata.CurrentPage = page;
         var request = new HttpRequestMessage(HttpMethod.Get,
-            "clientes?pageNumber=" + page.ToString() + "&pageSize=" + ItemsPerPage);
+            "clientes?pageNumber=" + page.ToString() + "&pageSize=" + ItemsPerPage + "&orderby=" + orderby + "&ordertype=" + ordertype);
         var client = _clientFactory.CreateClient("fortunaapi");
         Task<HttpResponseMessage> response = client.SendAsync(request);
 
@@ -173,6 +178,8 @@ else
         }
         else
         {
+            toastService.ShowError("Hubo un error obteniendo los clientes", "Error");
+            toastService.ShowError("Hubo un error obteniendo los clientes", "Error");
             errorString = $"Hubo un error obteniendo los clientes: {response.Result.ReasonPhrase}";
         }
 
@@ -199,11 +206,13 @@ else
 
         if (response.Result.IsSuccessStatusCode)
         {
-            await GetAllClientesPaged(PaginaActual);
+            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
             ConfirmacionEliminarClienteModal.Hide();
+            toastService.ShowSuccess("El cliente se ha eliminado con éxito", "Eliminación cliente");
         }
         else
         {
+            toastService.ShowError("Hubo un error eliminando al cliente", "Error");
             errorString = $"Hubo un error eliminando al cliente: {response.Result.ReasonPhrase}";
             ConfirmacionEliminarClienteModal.Hide();
             return;
@@ -214,12 +223,15 @@ else
     {
         ItemsPerPage = selection;
         PaginaActual = 1;
-        await GetAllClientesPaged(PaginaActual);
+        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
     }
 
-    private void Sort()
+    private async void Sort(string field)
     {
-        clientes.ToList().Sort();
+        OrderByField = field != null ? field : "Nombre";
+        OrderType = (OrderType == "asc" ? "desc" : "asc");
+
+        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
     }
 
     private async Task InsertCliente()
@@ -237,10 +249,12 @@ else
 
         if (response.Result.IsSuccessStatusCode)
         {
-            await GetAllClientesPaged(PaginaActual);
+            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
+            toastService.ShowSuccess("El cliente se ha creado con éxito", "Nuevo cliente");
         }
         else
         {
+            toastService.ShowError("Hubo un error durante la creación del cliente", "Error");
             errorString = $"Hubo un error insertando el nuevo cliente: {response.Result.ReasonPhrase}";
             return;
         }
@@ -261,7 +275,7 @@ else
     private async void PaginaSeleccionada(int pagina)
     {
         PaginaActual = pagina;
-        await GetAllClientesPaged(pagina);
+        await GetAllClientesPaged(pagina, OrderByField, OrderType);
     }
 
     private void NuevoClienteForm()
@@ -295,10 +309,12 @@ else
 
         if (response.Result.IsSuccessStatusCode)
         {
-            await GetAllClientesPaged(PaginaActual);
+            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
+            toastService.ShowSuccess("El cliente se ha actualizado con éxito", "Actualización cliente");
         }
         else
         {
+            toastService.ShowError("Hubo un error durante la actualización del cliente", "Error");
             errorString = $"Hubo un error editando el nuevo cliente: {response.Result.ReasonPhrase}";
             return;
         }

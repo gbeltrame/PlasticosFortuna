@@ -18,9 +18,50 @@ namespace PlasticosFortuna.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public PagedList<Cliente> GetClientes(PaginationDTO pagination)
+        public PagedList<Cliente> GetClientes(PaginationDTO pagination, String OrderBy, String OrderType)
         {
-            return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes, pagination.PageNumber, pagination.PageSize);
+            switch (OrderBy)
+            {
+                case "Id":
+                    if (OrderType == "desc")
+                    {
+                        return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes.OrderByDescending((o => o.Id)), pagination.PageNumber, pagination.PageSize);
+                    }
+                    else
+                    {
+                        return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes.OrderBy((o => o.Id)), pagination.PageNumber, pagination.PageSize);
+                    }
+                case "Nombre":
+                    if (OrderType == "desc")
+                    {
+                        return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes.OrderByDescending((o => o.Nombre)), pagination.PageNumber, pagination.PageSize);
+                    }
+                    else
+                    {
+                        return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes.OrderBy((o => o.Nombre)), pagination.PageNumber, pagination.PageSize);
+                    }
+                case "Descripcion":
+                    if (OrderType == "desc")
+                    {
+                        return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes.OrderByDescending((o => o.Descripcion)), pagination.PageNumber, pagination.PageSize);
+                    }
+                    else
+                    {
+                        return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes.OrderBy((o => o.Descripcion)), pagination.PageNumber, pagination.PageSize);
+                    }
+                case "Email":
+                    if (OrderType == "desc")
+                    {
+                        return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes.OrderByDescending((o => o.Email)), pagination.PageNumber, pagination.PageSize);
+                    }
+                    else
+                    {
+                        return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes.OrderBy((o => o.Email)), pagination.PageNumber, pagination.PageSize);
+                    }
+                default:
+                    return PagedList<Cliente>.ToPagedList(_appDbContext.Clientes, pagination.PageNumber, pagination.PageSize);
+            }
+
         }
 
         public Cliente GetClienteById(int clienteId)

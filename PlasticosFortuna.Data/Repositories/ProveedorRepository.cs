@@ -17,9 +17,50 @@ namespace PlasticosFortuna.Data.Repositories
             _appDbContext = appDbContext;
         }
 
-        public PagedList<Proveedor> GetProveedores(PaginationDTO pagination)
+        public PagedList<Proveedor> GetProveedores(PaginationDTO pagination, String OrderBy, String OrderType)
         {
-            return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores, pagination.PageNumber, pagination.PageSize);
+            switch (OrderBy)
+            {
+                case "Id":
+                    if(OrderType == "desc")
+                    {
+                        return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores.OrderByDescending((o => o.Id)), pagination.PageNumber, pagination.PageSize);
+                    }
+                    else
+                    {
+                        return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores.OrderBy((o => o.Id)), pagination.PageNumber, pagination.PageSize);
+                    }
+                case "Nombre":
+                    if (OrderType == "desc")
+                    {
+                        return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores.OrderByDescending((o => o.Nombre)), pagination.PageNumber, pagination.PageSize);
+                    }
+                    else
+                    {
+                        return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores.OrderBy((o => o.Nombre)), pagination.PageNumber, pagination.PageSize);
+                    }
+                case "Descripcion":
+                    if (OrderType == "desc")
+                    {
+                        return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores.OrderByDescending((o => o.Descripcion)), pagination.PageNumber, pagination.PageSize);
+                    }
+                    else
+                    {
+                        return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores.OrderBy((o => o.Descripcion)), pagination.PageNumber, pagination.PageSize);
+                    }
+                case "Email":
+                    if (OrderType == "desc")
+                    {
+                        return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores.OrderByDescending((o => o.Email)), pagination.PageNumber, pagination.PageSize);
+                    }
+                    else
+                    {
+                        return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores.OrderBy((o => o.Email)), pagination.PageNumber, pagination.PageSize);
+                    }
+                default:
+                    return PagedList<Proveedor>.ToPagedList(_appDbContext.Proveedores, pagination.PageNumber, pagination.PageSize);
+            }
+            
         }
 
         public Proveedor GetProveedorById(int ProveedorId)

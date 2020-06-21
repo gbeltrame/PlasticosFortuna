@@ -21,11 +21,11 @@ namespace PlasticosFortuna.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllProveedores([FromQuery] PaginationDTO paging)
+        public IActionResult GetAllProveedores([FromQuery] PaginationDTO paging, [FromQuery] String orderby, [FromQuery] String ordertype)
         {
             try
             {
-                var proveedores = _ProveedorRepository.GetProveedores(paging);
+                var proveedores = _ProveedorRepository.GetProveedores(paging, orderby, ordertype);
                 var metadata = new
                 {
                     proveedores.TotalCount,

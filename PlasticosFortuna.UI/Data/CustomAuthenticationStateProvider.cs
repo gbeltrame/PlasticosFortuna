@@ -1,5 +1,6 @@
 ﻿using Blazored.SessionStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using PlasticosFortuna.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,15 +41,25 @@ namespace PlasticosFortuna.UI.Data
             return await Task.FromResult(new AuthenticationState(user));
         }
 
-        public void MarkUserAsAutheticated(string loginId)
+        public void MarkUserAsAutheticated(UserModel user)
         {
-            var identity = new ClaimsIdentity(new[]
-            {
-                new Claim(ClaimTypes.Name, loginId),
+            var identity = GetClaimsIdentity(user);
+
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
+        }
+
+        private ClaimsIdentity GetClaimsIdentity(UserModel user)
+        {
+            var claimsIdentity = new ClaimsIdentity(new[]
+{
+                new Claim(ClaimTypes.Name, user.LoginId),
+                new Claim(ClaimTypes.Role, user.UserRole.RoleName)
 
             }, "apiauth_type");
-            var user = new ClaimsPrincipal(identity);
-            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
+
+            return claimsIdentity;
         }
 
         public void MarkUserAsLoggedOut()

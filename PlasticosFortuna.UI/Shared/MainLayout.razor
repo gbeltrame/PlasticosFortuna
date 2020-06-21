@@ -1,7 +1,10 @@
 ﻿@inherits LayoutComponentBase
 @using PlasticosFortuna.UI.Data
+@using Blazored.Toast.Configuration
 @inject IBootstrapCss BootstrapCss
 @inject AuthenticationStateProvider AuthenticationStateProvider
+
+<BlazoredToasts Position="ToastPosition.BottomRight" Timeout="6" />
 <AuthorizeView>
     <Authorized>
         <div class="sidebar">
