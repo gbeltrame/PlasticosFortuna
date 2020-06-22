@@ -148,3 +148,5 @@ C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netco
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Shared\Paginacion.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Shared\SurveyPrompt.razor.g.cs
 C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\_Imports.razor.g.cs
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\RazorDeclaration\Shared\Filter.razor.g.cs
+C:\Users\beltr\source\repos\PlasticosFortuna\PlasticosFortuna.UI\obj\Debug\netcoreapp3.1\Razor\Shared\Filter.razor.g.cs

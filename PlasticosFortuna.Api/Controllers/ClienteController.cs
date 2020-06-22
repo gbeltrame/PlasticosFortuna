@@ -23,11 +23,11 @@ namespace PlasticosFortuna.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllClientes([FromQuery] PaginationDTO paging, [FromQuery] String orderby, [FromQuery] String ordertype)
+        public IActionResult GetAllClientes([FromQuery] PaginationDTO paging, [FromQuery] String orderby, [FromQuery] String ordertype, [FromQuery] String searchfilter)
         {
             try
             {
-                var clientes = _clienteRepository.GetClientes(paging, orderby, ordertype);
+                var clientes = _clienteRepository.GetClientes(paging, orderby, ordertype, searchfilter);
                 var metadata = new
                 {
                     clientes.TotalCount,

@@ -7,7 +7,7 @@ namespace PlasticosFortuna.Data.Repositories
     {
         void DeleteCliente(int clienteId);
         Cliente GetClienteById(int clienteId);
-        PagedList<Cliente> GetClientes(PaginationDTO pagination, string orderby, string ordertype);
+        PagedList<Cliente> GetClientes(PaginationDTO pagination, string orderby, string ordertype, string searchfilter);
         Cliente UpdateCliente(Cliente cliente);
         Cliente AddCliente(Cliente cliente);
     }

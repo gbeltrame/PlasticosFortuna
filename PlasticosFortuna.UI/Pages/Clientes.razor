@@ -20,8 +20,9 @@ else if (clientes == null)
 else
 {
 
-    <BSButton Color="Color.Primary" @onclick="NuevoClienteForm">Nuevo Cliente  <i class="oi oi-person"></i></BSButton>
+    <BSButton Color="Color.Primary" Class="btn-sm" @onclick="NuevoClienteForm">Nuevo Cliente  <i class="oi oi-person"></i></BSButton>
     <p />
+    <Filter PlaceholderText="Ingrese su criterio de búsqueda" ClearFilterText="Quitar filtro" OnFilterCleared="OnFilterCleared" OnSearch="OnSearch" />
     <BSModal @ref="ClienteModal">
         <BSForm Model="@clienteModel" OnValidSubmit="@SubmitCliente">
             <BSModalHeader OnClick="@(() => ClienteModal.Hide())">@modalTitle</BSModalHeader>
@@ -53,6 +54,7 @@ else
             </BSModalFooter>
         </BSForm>
     </BSModal>
+
     <BSModal @ref="ConfirmacionEliminarClienteModal">
         <BSModalHeader OnClick="@(() => ConfirmacionEliminarClienteModal.Hide())">@modalTitle</BSModalHeader>
         <BSModalBody><p>Esta seguro que desea eliminar al cliente @clienteNameToDelete ?</p></BSModalBody>
@@ -71,13 +73,6 @@ else
                 <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="" @onclick="@(() => Sort("Nombre"))" @onclick:preventDefault>Nombre</a> <i style="visibility:@(OrderByField == "Nombre"? "visible" : "hidden")" class="oi oi-caret-@(OrderType == "asc"? "bottom":"top")" /></BSTableHeadCell>
                 <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="" @onclick="@(() => Sort("Descripcion"))" @onclick:preventDefault>Descripci&#243;n</a> <i style="visibility:@(OrderByField == "Descripcion"? "visible" : "hidden")" class="oi oi-caret-@(OrderType == "asc"? "bottom":"top")" /></BSTableHeadCell>
                 <BSTableHeadCell Color="Color.Dark" scope="col"><a style="color:white" href="" @onclick="@(() => Sort("Email"))" @onclick:preventDefault>Email</a> <i style="visibility:@(OrderByField == "Email"? "visible" : "hidden")" class="oi oi-caret-@(OrderType == "asc"? "bottom":"top")" /></BSTableHeadCell>
-            </BSTableRow>
-            <BSTableRow>
-                <BSTableHeadCell Color="Color.Dark" scope="col">Filtros</BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Inserte Valor Filtro"></BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><input type="email" class="form-control" id="exampleFormControlInput2" placeholder="Inserte Valor Filtro"></BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><input type="email" class="form-control" id="exampleFormControlInput3" placeholder="Inserte Valor Filtro"></BSTableHeadCell>
-                <BSTableHeadCell Color="Color.Dark" scope="col"><input type="email" class="form-control" id="exampleFormControlInput4" placeholder="Inserte Valor Filtro"></BSTableHeadCell>                
             </BSTableRow>
         </BSTableHead>
         <BSTableBody>
@@ -147,7 +142,7 @@ else
     int maxCellCharLength = 25;
     private string OrderByField = "Name";
     private string OrderType = "asc";
-    private string FilterText;
+    private string SearchFilterText { get; set; } = null;
 
     //Paging
     public int PaginaActual { get; set; } = 1;
@@ -157,15 +152,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
+        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
         PaginasTotales = pagingMetadata.TotalPages;
     }
 
-    private async Task GetAllClientesPaged(int page, string orderby, string ordertype)
+    private async Task GetAllClientesPaged(int page, string orderby, string ordertype, string searchFilter)
     {
         pagingMetadata.CurrentPage = page;
         var request = new HttpRequestMessage(HttpMethod.Get,
-            "clientes?pageNumber=" + page.ToString() + "&pageSize=" + ItemsPerPage + "&orderby=" + orderby + "&ordertype=" + ordertype);
+            "clientes?pageNumber=" + page.ToString() + "&pageSize=" + ItemsPerPage + "&orderby=" + orderby + "&ordertype=" + ordertype + ((searchFilter != null && searchFilter != "")? "&searchfilter=" + searchFilter : null));
         var client = _clientFactory.CreateClient("fortunaapi");
         Task<HttpResponseMessage> response = client.SendAsync(request);
 
@@ -206,7 +201,7 @@ else
 
         if (response.Result.IsSuccessStatusCode)
         {
-            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
+            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
             ConfirmacionEliminarClienteModal.Hide();
             toastService.ShowSuccess("El cliente se ha eliminado con éxito", "Eliminación cliente");
         }
@@ -223,7 +218,7 @@ else
     {
         ItemsPerPage = selection;
         PaginaActual = 1;
-        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
+        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
     }
 
     private async void Sort(string field)
@@ -231,7 +226,7 @@ else
         OrderByField = field != null ? field : "Nombre";
         OrderType = (OrderType == "asc" ? "desc" : "asc");
 
-        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
+        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
     }
 
     private async Task InsertCliente()
@@ -249,7 +244,7 @@ else
 
         if (response.Result.IsSuccessStatusCode)
         {
-            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
+            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
             toastService.ShowSuccess("El cliente se ha creado con éxito", "Nuevo cliente");
         }
         else
@@ -275,7 +270,7 @@ else
     private async void PaginaSeleccionada(int pagina)
     {
         PaginaActual = pagina;
-        await GetAllClientesPaged(pagina, OrderByField, OrderType);
+        await GetAllClientesPaged(pagina, OrderByField, OrderType, SearchFilterText);
     }
 
     private void NuevoClienteForm()
@@ -309,7 +304,7 @@ else
 
         if (response.Result.IsSuccessStatusCode)
         {
-            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType);
+            await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
             toastService.ShowSuccess("El cliente se ha actualizado con éxito", "Actualización cliente");
         }
         else
@@ -325,5 +320,17 @@ else
         if (string.IsNullOrEmpty(str))
             return str;
         return str.Substring(0, Math.Min(str.Length, maxLength));
+    }
+
+    private async void OnSearch(string searchFilter)
+    {
+        SearchFilterText = searchFilter;
+        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
+    }
+
+    private async void OnFilterCleared()
+    {
+        SearchFilterText = null;
+        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
     }
 }

@@ -1,0 +1,51 @@
+﻿<div class="row">
+    <div class="col-3 offset-3" style="padding:0 !important">
+        <input type="text" class="form-control" id="filterSearch" aria-describedby="filterText" placeholder="@PlaceholderText" @bind-value="@SearchFilterValue" @bind-value:event="oninput">
+    </div>
+    <div class="col-1" style="padding:0 !important">
+        <div class="text-left">
+            <button type="button" class="btn btn-outline-primary @((SearchFilterValue == null || SearchFilterValue == "")? "disabled": null)" @onclick="@(() => OnSearchInternal())"><i class="oi oi-magnifying-glass" /></button>
+        </div>
+    </div>
+    <div class="col-1" style="padding:0 !important">
+        <div class="text-left">
+            <button type="button" class="btn btn-link" style="visibility:@((SearchFilterValue == null || SearchFilterValue == "")? "hidden": "visible")" @onclick="@(() => OnFilterClearedInternal())">@ClearFilterText</button>
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter] public string ClearFilterText { get; set; }
+    [Parameter] public string PlaceholderText { get; set; }
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+    [Parameter] public EventCallback OnFilterCleared { get; set; }
+    private string SearchFilterValue { get; set; }
+    private bool disabled { get; set; } = false;
+
+    private async Task OnFilterClearedInternal()
+    {
+        SearchFilterValue = null;
+        await OnFilterCleared.InvokeAsync(null);
+        return;
+    }
+    private async Task OnSearchInternal()
+    {
+        if(SearchFilterValue != null && SearchFilterValue != "")
+        {
+            await OnSearch.InvokeAsync(SearchFilterValue);
+        }
+
+        return;
+    }
+
+    private void ValidateTextBoxValue()
+    {
+        if (SearchFilterValue != null || SearchFilterValue != "")
+        {
+            disabled = false;
+        }
+        else
+        {
+            disabled = true;
+        }
+    }
+}
