@@ -19,7 +19,17 @@
                 <input type="password" class="form-control" @bind="user.Password" placeholder="Contraseña *" />
             </div>
             <div class="form-group">
-                <input type="submit" class="btnSubmit" value="Login" />
+                @if (Loading)
+                {
+                    <input type="submit" class="btnSubmit" value="Login" />
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                }
+                else
+                {
+                    <input type="submit" class="btnSubmit" value="Login" />
+                }
             </div>
             <div class="form-group">
                 <a href="#" class="ForgetPwd">Olvid&#243; su contrase&#241;a?</a>
@@ -30,26 +40,33 @@
 
 @code {        
     private UserModel user;
+    private bool Loading = false;
 
     protected override Task OnInitializedAsync()
     {
         user = new UserModel();
+        Loading = false;
         return base.OnInitializedAsync();
     }
 
     private async Task<bool> ValidateUser()
     {
-
-        var returnedUser = await userService.LoginAsync(user);
+        Loading = true;
+        //StateHasChanged();
+        var returnedUser = await Task.Run(() => userService.LoginAsync(user));
 
         if(returnedUser.LoginId != null)
         {
             ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAutheticated(returnedUser);
             NavigationManager.NavigateTo("/");
+            Loading = false;
+            //StateHasChanged();
             return await Task.FromResult(true);
         }
         else
         {
+            Loading = false;
+            //StateHasChanged();
             return await Task.FromResult(false);
         }
     }

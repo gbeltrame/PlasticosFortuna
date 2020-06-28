@@ -152,7 +152,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText);
+        await Task.Run(() => GetAllClientesPaged(PaginaActual, OrderByField, OrderType, SearchFilterText));
         PaginasTotales = pagingMetadata.TotalPages;
     }
 
